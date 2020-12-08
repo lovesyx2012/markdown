@@ -214,3 +214,61 @@ export default App
 
 
 
+#### LocaleProvider国际化
+
+###### LocaleProvider 使用 React 的 [context](https://facebook.github.io/react/docs/context.html) 特性，只需在应用外围包裹一次即可全局生效
+
+```
+import { ConfigProvider } from 'antd';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
+ 
+render(
+  <Provider store={store}>
+    <ConfigProvider locale={zhCN}>
+      <App />
+    </ConfigProvider>
+  </Provider>,
+  document.getElementById('root')
+)
+```
+
+
+
+#### 使用axios获取数据
+
+###### 增加依赖
+
+```
+npm i axios -S
+```
+
+###### request请求封装utils/request.js
+
+```
+import axios from 'axios'
+
+const isDev = process.env.NODE_ENV === 'development'
+
+const request = axios.create({
+    baseURL: isDev ? 'https://api.zisuye.com' : ''
+})
+
+const authToken = "Basic " + "ZDc3NzlhMmM2OGIwNjcwYmI5YTY2MjU0MzNmMmNiMTk6YWJmODY5YzU3ODIwOWE2ODIwODExZDg4ZjNiZGRkY2Y=";
+
+request.interceptors.request.use(config => {
+console.log(config)
+    config.headers = Object.assign({}, config.headers, {'Authorization': authToken})
+    return config
+})
+
+request.interceptors.response.use(resp => {
+    if (resp.status === 200 && resp.data.code === "0000") {
+        return resp.data.data
+    } else {
+        // 统一异常处理
+    }
+})
+
+export default request
+```
+
