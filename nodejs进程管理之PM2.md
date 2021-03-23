@@ -17,7 +17,7 @@ sudo -i pm2 start npm --name "web-app" -- run space
 
 ```
 sudo -i pm2 list
-sudo -i pm2 stop web_app
+sudo -i pm2 stop web-app
 sudo -i pm2 start web-app
 sudo -i pm2 restart web-app
 sudo -i pm2 show web-app
