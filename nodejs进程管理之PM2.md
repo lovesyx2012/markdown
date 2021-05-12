@@ -8,14 +8,14 @@
 
 ##### 1.1 开始管理项目
 
-```
+```shell
 cd  /home/data/web-app
 sudo -i pm2 start npm --name "web-app" -- run space
 ```
 
 ##### 1.2 常用命令
 
-```
+```shell
 sudo -i pm2 list
 sudo -i pm2 stop web-app
 sudo -i pm2 start web-app
@@ -31,13 +31,13 @@ sudo -i pm2 show web-app
 
 ##### 2.1 通过端口定位到进程
 
-```
+```shell
 sudo netstat -atpln | grep 18100
 ```
 
 ##### 2.2 通过进程ID定位到项目
 
-```
+```shell
 sudo lsof -np 1878
 ```
 
@@ -49,7 +49,7 @@ sudo lsof -np 1878
 
 #### 3 nginx 配置
 
-```
+```shell
 upstream space_web_app {
     server 127.0.0.1:18100;
 }
@@ -76,7 +76,7 @@ server {
 
 ##### 4.1 package.json scripts脚本配置
 
-```
+```json
 "scripts": {
     "space_build": "NODE_ENV=space NODE_OPTIONS='--max_old_space_size=4096' next build",
     .....
@@ -87,7 +87,7 @@ server {
 
 ###### 4.2.1 打包脚本
 
-```
+```shell
 echo $PATH
 rm -f web-app.tar.gz
 npm config set registry http://registry.npm.taobao.org/repository/npm-group/
@@ -100,7 +100,7 @@ tar -zcf web-app.tar.gz * .[!.]* --exclude=web-app.tar.gz --exclude=.git
 
 ###### 4.2.2 启动脚本
 
-```
+```shell
 #!/bin/bash
 
 source /etc/profile
